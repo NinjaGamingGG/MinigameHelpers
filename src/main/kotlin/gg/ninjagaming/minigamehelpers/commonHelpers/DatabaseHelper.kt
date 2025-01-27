@@ -77,51 +77,18 @@ object DatabaseHelper {
         return database
     }
 
-    fun initTables(){
+    fun initTables(sqlStrings: Array<String>){
         if (!::database.isInitialized)
             return
 
-        database.useConnection { connection ->
-            connection.createStatement().use { statement ->
-                statement.execute("CREATE TABLE IF NOT EXISTS ConfigurationIndex(" +
-                        "entryId INT NOT NULL AUTO_INCREMENT PRIMARY KEY," +
-                        "entryName VARCHAR(255)," +
-                        "entryDescription VARCHAR(255)," +
-                        "defaultLobby VARCHAR(255)," +
-                        "isEnabled TINYINT(1),"  +
-                        "minimumPlayers INT," +
-                        "maximumPlayers INT" +
-                        ")")
-            }
-        }
-
-        database.useConnection { connection ->
-            connection.createStatement().use { statement ->
-                statement.execute("CREATE TABLE IF NOT EXISTS ArenaConfigurationIndex(" +
-                        "entryId INT NOT NULL AUTO_INCREMENT PRIMARY KEY," +
-                        "arenaName VARCHAR(255)," +
-                        "arenaDescription VARCHAR(255)," +
-                        "arenaWorld VARCHAR(255)," +
-                        "arenaCenter VARCHAR(255)," +
-                        "arenaEnabled TINYINT(1)," +
-                        "arenaIcon VARCHAR(255)" +
-                        ")")
-            }
+        sqlStrings.forEach { sqlString ->
 
             database.useConnection { connection ->
                 connection.createStatement().use { statement ->
-                    statement.execute("CREATE TABLE IF NOT EXISTS PlayerSpawnPointIndex (" +
-                            "entryId INT NOT NULL AUTO_INCREMENT PRIMARY KEY," +
-                            "arenaName VARCHAR(255)," +
-                            "X DOUBLE," +
-                            "Y DOUBLE," +
-                            "Z DOUBLE," +
-                            "YAW FLOAT," +
-                            "PITCH FLOAT," +
-                            "isEnabled TINYINT(1))"
-                    )
+                    statement.execute(sqlString)
                 }
             }
+
         }
     }
 }
