@@ -77,12 +77,24 @@ object DatabaseHelper {
         return database
     }
 
-    fun initTables(sqlStrings: Array<String>){
+    /**
+     * Initializes database tables using the provided SQL strings. If the `initCommonTables` flag is set to true,
+     * additional common table SQL strings will be appended to the initialization process.
+     *
+     * @param sqlStrings An array of SQL strings used to create or initialize database tables.
+     * @param initCommonTables A boolean flag indicating whether to include common table SQL strings in the initialization process.
+     *                         Defaults to `true`.
+     */
+    fun initTables(sqlStrings: Array<String>, initCommonTables: Boolean = true){
         if (!::database.isInitialized)
             return
 
-        sqlStrings.forEach { sqlString ->
+        var tableStrings = sqlStrings
 
+        if (initCommonTables)
+            tableStrings = tableStrings.plus(getCommonTableSqlStrings())
+
+        sqlStrings.forEach { sqlString ->
             database.useConnection { connection ->
                 connection.createStatement().use { statement ->
                     statement.execute(sqlString)
@@ -90,5 +102,36 @@ object DatabaseHelper {
             }
 
         }
+    }
+
+    private fun getCommonTableSqlStrings(): Array<String>{
+        return arrayOf("CREATE TABLE IF NOT EXISTS ConfigurationIndex(" +
+                "entryId INT NOT NULL AUTO_INCREMENT PRIMARY KEY," +
+                "entryName VARCHAR(255)," +
+                "entryDescription VARCHAR(255)," +
+                "defaultLobby VARCHAR(255)," +
+                "isEnabled TINYINT(1),"  +
+                "minimumPlayers INT," +
+                "maximumPlayers INT)",
+
+            "CREATE TABLE IF NOT EXISTS ArenaConfigurationIndex(" +
+                    "entryId INT NOT NULL AUTO_INCREMENT PRIMARY KEY," +
+                    "arenaName VARCHAR(255)," +
+                    "arenaDescription VARCHAR(255)," +
+                    "arenaWorld VARCHAR(255)," +
+                    "arenaCenter VARCHAR(255)," +
+                    "arenaEnabled TINYINT(1)," +
+                    "arenaIcon VARCHAR(255))",
+
+            "CREATE TABLE IF NOT EXISTS PlayerSpawnPointIndex (" +
+                    "entryId INT NOT NULL AUTO_INCREMENT PRIMARY KEY," +
+                    "arenaName VARCHAR(255)," +
+                    "X DOUBLE," +
+                    "Y DOUBLE," +
+                    "Z DOUBLE," +
+                    "YAW FLOAT," +
+                    "PITCH FLOAT," +
+                    "isEnabled TINYINT(1))"
+            )
     }
 }

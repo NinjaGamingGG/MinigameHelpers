@@ -6,7 +6,7 @@
 
     <groupId>gg.ninjagaming</groupId>
     <artifactId>MinigameHelpers</artifactId>
-    <version>0.1</version>
+    <version>0.0.2-SNAPSHOT</version>
     <description>A library for helping with minigame development</description>
 
 
@@ -43,11 +43,11 @@
     </distributionManagement>
 
     <properties>
+        <java.version>21</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <kotlin.code.style>official</kotlin.code.style>
         <kotlin.compiler.jvmTarget>1.8</kotlin.compiler.jvmTarget>
         <ktorm.version>4.1.1</ktorm.version>
-
     </properties>
 
     <repositories>
