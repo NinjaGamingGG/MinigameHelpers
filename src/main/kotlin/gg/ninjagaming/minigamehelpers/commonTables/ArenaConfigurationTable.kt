@@ -1,7 +1,6 @@
 package gg.ninjagaming.minigamehelpers.commonTables
 
 import org.ktorm.entity.Entity
-import org.ktorm.schema.BaseTable
 import org.ktorm.schema.Table
 import org.ktorm.schema.int
 import org.ktorm.schema.varchar
