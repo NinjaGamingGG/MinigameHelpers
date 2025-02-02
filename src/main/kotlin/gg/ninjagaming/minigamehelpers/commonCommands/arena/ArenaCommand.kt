@@ -16,6 +16,25 @@ import org.ktorm.entity.sequenceOf
 import kotlin.collections.isEmpty
 import kotlin.text.lowercase
 
+/**
+ * Handles the execution of the `/arena` command and its subcommands for managing arenas.
+ *
+ * This object serves as the command executor for the `/arena` command, providing functionality
+ * for creating, viewing, deleting, toggling, setting world and spawn points, and managing the
+ * configuration of arenas in the minigame environment. The command and its associated subcommands
+ * are used to interact with arena data stored in the database.
+ *
+ * Key Subcommands:
+ * - `create`: Creates a new arena with a given name and default configuration.
+ * - `view`: Displays the details of a specific arena.
+ * - `delete`: Deletes an existing arena from the system.
+ * - `toggle`: Toggles the enabled state of an arena.
+ * - `world`: Manages world-related settings for an arena.
+ * - `spawnpoint`: Manages spawn points for an arena.
+ *
+ * Invalid commands or missing arguments will result in an appropriate usage message being
+ * sent to the command sender.
+ */
 object ArenaCommand: CommandExecutor {
     override fun onCommand(
         sender: CommandSender,

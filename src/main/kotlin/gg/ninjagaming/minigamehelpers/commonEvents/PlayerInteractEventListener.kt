@@ -9,6 +9,20 @@ import org.bukkit.event.Listener
 import org.bukkit.event.block.Action
 import org.bukkit.event.player.PlayerInteractEvent
 
+/**
+ * Listener for handling player interaction events (`PlayerInteractEvent`).
+ *
+ * This listener is triggered whenever a player performs an interaction, such as right-clicking
+ * with an item or on a block. The listener responds to certain interactions based on the item the
+ * player is holding and executes specific actions accordingly.
+ *
+ * Key functionalities include:
+ * - Identifying right-click actions (`RIGHT_CLICK_AIR` or `RIGHT_CLICK_BLOCK`).
+ * - Handling specific items such as:
+ *   - `Material.OAK_DOOR`: Executes the leave lobby action and kicks the player from the lobby.
+ *   - `Material.NAME_TAG`: Opens a custom inventory for arena voting, enabling players to vote
+ *     for their preferred arena.
+ */
 object PlayerInteractEventListener: Listener {
     @EventHandler
     fun onPlayerInteract(event: PlayerInteractEvent) {

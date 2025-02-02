@@ -31,6 +31,13 @@ private fun countdownTitle(duration: Int): Title {
     return title(Component.text("Starting in §e$duration §rseconds..."), subtitleComponent, times(Duration.ofSeconds(0), Duration.ofSeconds(3), Duration.ofSeconds(0)))
 }
 
+/**
+ * Manages the waiting lobby functionality for a minigame.
+ *
+ * This object controls the behavior of the waiting lobby before a game starts,
+ * including handling player count checks, displaying titles, managing the countdown timer,
+ * selecting arenas, and updating player scoreboards.
+ */
 object WaitingLobbyRunnable {
     fun scheduleRunnable(): Runnable {
         val runnable = Runnable {
@@ -40,7 +47,7 @@ object WaitingLobbyRunnable {
     }
 
 
-    fun waitingLobbyTick() {
+    private fun waitingLobbyTick() {
         val playerList = ArenaHelper.PlayerManagement.getPlayerList()
         val gameModeConfig = MinigameHelpers.getMinigameConfig()
 

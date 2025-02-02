@@ -12,6 +12,27 @@ import org.ktorm.entity.filter
 import org.ktorm.entity.firstOrNull
 import org.ktorm.entity.sequenceOf
 
+/**
+ * Handles the configuration commands for a minigame. This object implements the `CommandExecutor` interface
+ * to manage various operations on game mode configurations including creation, viewing, editing, loading,
+ * deleting, listing, toggling, and setting player limits.
+ *
+ * The available commands are:
+ * - `create`: Creates a new configuration with the provided name.
+ * - `view`: Displays the details of a specific configuration.
+ * - `edit`: Placeholder for editing functionality to be implemented later.
+ * - `load`: Loads a configuration for use.
+ * - `delete`: Removes a specified configuration.
+ * - `list`: Lists all existing configurations.
+ * - `toggle`: Toggles the enabled/disabled state of a configuration.
+ * - `set-min-players`: Sets the minimum number of players for a specific configuration.
+ * - `set-max-players`: Sets the maximum number of players for a specific configuration.
+ * - `help`: Placeholder for providing detailed help to users.
+ *
+ * Each subcommand is delegated to a corresponding function or subcommand class for execution.
+ * Additional helper function:
+ * - `getGamemodeConfig`: Retrieves a game mode configuration by its name from the database.
+ */
 object ConfigCommand: CommandExecutor {
     override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>): Boolean {
         if (args.isEmpty()) {

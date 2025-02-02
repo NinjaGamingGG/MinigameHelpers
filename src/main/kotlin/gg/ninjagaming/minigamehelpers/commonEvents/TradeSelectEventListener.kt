@@ -7,6 +7,14 @@ import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.inventory.TradeSelectEvent
 
+/**
+ * An event listener that handles actions related to trade selections in the game.
+ *
+ * This listener is triggered when a player selects a trade in a merchant inventory.
+ * It interprets the selected trade as a vote for a specific arena, registers the vote,
+ * and performs actions such as notifying the player, closing their inventory, and
+ * canceling the event to prevent further actions.
+ */
 object TradeSelectEventListener: Listener {
     @EventHandler
     fun onTradeSelectEvent(event: TradeSelectEvent){

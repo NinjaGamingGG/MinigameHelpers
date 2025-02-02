@@ -13,6 +13,26 @@ import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.player.PlayerJoinEvent
 
+/**
+ * Event listener for handling the `PlayerJoinEvent`.
+ *
+ * This listener is triggered whenever a player joins the server. It handles the player's actions
+ * upon joining, such as determining the game state, adding the player to the appropriate list,
+ * setting up their inventory, teleporting them to the lobby, or placing them in spectator mode.
+ * The join message is also updated to reflect the addition of the player.
+ *
+ * Key functionalities include:
+ * - Determining the game state using `GameStateHelper.getGameState`.
+ * - Displaying a customized join message with the player's name.
+ * - Handling players joining during the `LOBBY` state:
+ *   - Adding the player to the active lobby player list.
+ *   - Configuring the player's inventory with items such as arena voting and lobby leave items.
+ *   - Teleporting the player to the lobby's configured spawn location.
+ *   - Setting the player's game mode to adventure mode.
+ * - Handling players joining during other game states:
+ *   - Checking if spectator mode is enabled in the plugin's configuration.
+ *   - Adding the player to the spectator list if spectator mode is enabled.
+ */
 object PlayerJoinEvent: Listener {
     @EventHandler
     fun onPlayerJoinEvent(event: PlayerJoinEvent){
