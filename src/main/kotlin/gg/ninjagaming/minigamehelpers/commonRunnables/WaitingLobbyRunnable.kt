@@ -1,6 +1,6 @@
 package gg.ninjagaming.minigamehelpers.commonRunnables
 
-import gg.ninjagaming.minigamehelpers.MinnigameHelpers
+import gg.ninjagaming.minigamehelpers.MinigameHelpers
 import gg.ninjagaming.minigamehelpers.commonHelpers.ArenaHelper
 import gg.ninjagaming.minigamehelpers.commonHelpers.GameStateHelper
 import gg.ninjagaming.minigamehelpers.commonHelpers.ScoreboardHelper
@@ -20,7 +20,7 @@ import kotlin.collections.find
 import kotlin.collections.forEach
 import kotlin.collections.maxByOrNull
 import kotlin.collections.random
-private val waitingForPlayersTitle = title(Component.text("Waiting for Players..."), Component.text("§e${MinnigameHelpers.getMinigameConfig().minimumPlayers} §rPlayers required to Start"),times(Duration.ofSeconds(0), Duration.ofSeconds(3),Duration.ofSeconds(0)))
+private val waitingForPlayersTitle = title(Component.text("Waiting for Players..."), Component.text("§e${MinigameHelpers.getMinigameConfig().minimumPlayers} §rPlayers required to Start"),times(Duration.ofSeconds(0), Duration.ofSeconds(3),Duration.ofSeconds(0)))
 private fun countdownTitle(duration: Int): Title {
     var subtitleComponent = Component.text("§oVote now for a Arena!")
     if (duration < 5){
@@ -42,7 +42,7 @@ object WaitingLobbyRunnable {
 
     fun waitingLobbyTick() {
         val playerList = ArenaHelper.PlayerManagement.getPlayerList()
-        val gameModeConfig = MinnigameHelpers.getMinigameConfig()
+        val gameModeConfig = MinigameHelpers.getMinigameConfig()
 
         //Check if enough players are in the Lobby to start the Countdown
         if (playerList.count() >= gameModeConfig.minimumPlayers) {
@@ -53,7 +53,7 @@ object WaitingLobbyRunnable {
 
         }//If there aren't enough players anymore but countdown is already started we stop it. If the Countdown has reached its final phase this is ignored
         else{
-            if (WaitingLobbyCountdownTimer.isRunning() && WaitingLobbyCountdownTimer.getDuration() > MinnigameHelpers.getPluginConfig().getInt("lobby.Countdown_Final_Phase_Seconds")){
+            if (WaitingLobbyCountdownTimer.isRunning() && WaitingLobbyCountdownTimer.getDuration() > MinigameHelpers.getPluginConfig().getInt("lobby.Countdown_Final_Phase_Seconds")){
                 WaitingLobbyCountdownTimer.stopTimer()
                 ArenaHelper.PlayerManagement.getPlayerList().forEach {
                     it.sendMessage("Countdown stopped, §c${gameModeConfig.minimumPlayers} §rplayers required to start the game.")
@@ -83,15 +83,15 @@ object WaitingLobbyRunnable {
     }
 
     private object WaitingLobbyCountdownTimer {
-        private val COUNTDOWN_FINAL_PHASE_SECONDS = MinnigameHelpers.getPluginConfig().getInt("lobby.Countdown_Final_Phase_Seconds")
-        private val DEFAULT_DURATION = MinnigameHelpers.getPluginConfig().getInt("lobby.Countdown_Duration_Seconds") + COUNTDOWN_FINAL_PHASE_SECONDS
+        private val COUNTDOWN_FINAL_PHASE_SECONDS = MinigameHelpers.getPluginConfig().getInt("lobby.Countdown_Final_Phase_Seconds")
+        private val DEFAULT_DURATION = MinigameHelpers.getPluginConfig().getInt("lobby.Countdown_Duration_Seconds") + COUNTDOWN_FINAL_PHASE_SECONDS
 
 
         private var timerDuration = DEFAULT_DURATION
         var task: BukkitTask? = null
 
         fun startTimer() {
-            task = Bukkit.getScheduler().runTaskTimer(MinnigameHelpers.getPluginInstance(), Runnable {
+            task = Bukkit.getScheduler().runTaskTimer(MinigameHelpers.getPluginInstance(), Runnable {
                 if (timerDuration == 0) {
                     task?.cancel()
                     return@Runnable
@@ -150,7 +150,7 @@ object WaitingLobbyRunnable {
                 .find { it.arenaName == selectedArena.value }
 
             if (selectedConfig == null) {
-                MinnigameHelpers.getPluginInstance().logger.warning("The selected arena ${selectedArena.value} does not exist.")
+                MinigameHelpers.getPluginInstance().logger.warning("The selected arena ${selectedArena.value} does not exist.")
                 selectRandomArena()
                 return
             }
@@ -182,8 +182,8 @@ object WaitingLobbyRunnable {
         objective.displaySlot = DisplaySlot.SIDEBAR
 
         val currentPlayers = ArenaHelper.PlayerManagement.getPlayerList().size
-        val minimumPlayers = MinnigameHelpers.getMinigameConfig().minimumPlayers
-        val maximumPlayers = MinnigameHelpers.getMinigameConfig().maximumPlayers
+        val minimumPlayers = MinigameHelpers.getMinigameConfig().minimumPlayers
+        val maximumPlayers = MinigameHelpers.getMinigameConfig().maximumPlayers
 
         var playerCountLine = "Players: §e$currentPlayers/$maximumPlayers"
         if (currentPlayers < minimumPlayers)

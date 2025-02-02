@@ -1,6 +1,6 @@
 package gg.ninjagaming.minigamehelpers.commonCommands.config
 
-import gg.ninjagaming.minigamehelpers.MinnigameHelpers
+import gg.ninjagaming.minigamehelpers.MinigameHelpers
 import org.bukkit.command.CommandSender
 
 
@@ -13,7 +13,7 @@ object ConfigLoadSubcommand {
             return false
         }
 
-        MinnigameHelpers.setMinigameConfig(result)
+        MinigameHelpers.setMinigameConfig(result)
 
         player.sendMessage("[OITC] Successfully loaded the config $configName")
 

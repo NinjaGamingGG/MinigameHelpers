@@ -14,7 +14,7 @@ import org.ktorm.entity.firstOrNull
 import org.ktorm.entity.sequenceOf
 import org.ktorm.entity.toList
 
-object MinnigameHelpers {
+object MinigameHelpers {
     private lateinit var pluginInstance: JavaPlugin
     private lateinit var pluginConfig: FileConfiguration
     private lateinit var minigameConfig: GameModeConfigurationEntry

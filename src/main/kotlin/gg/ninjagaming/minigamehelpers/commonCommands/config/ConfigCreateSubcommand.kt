@@ -1,6 +1,6 @@
 package gg.ninjaGaming.minigameOITC.commands.config
 
-import gg.ninjagaming.minigamehelpers.MinnigameHelpers
+import gg.ninjagaming.minigamehelpers.MinigameHelpers
 import gg.ninjagaming.minigamehelpers.commonHelpers.DatabaseHelper
 import gg.ninjagaming.minigamehelpers.commonTables.GameModeConfigurationTable
 import org.bukkit.command.CommandSender
@@ -20,7 +20,7 @@ object ConfigCreateSubcommand {
         }
 
         if(inserted == 0){
-            MinnigameHelpers.getPluginInstance().logger.warning ("Failed to create config $configName")
+            MinigameHelpers.getPluginInstance().logger.warning ("Failed to create config $configName")
             player.sendMessage("[OITC] Failed to create config $configName")
             return false
         }
