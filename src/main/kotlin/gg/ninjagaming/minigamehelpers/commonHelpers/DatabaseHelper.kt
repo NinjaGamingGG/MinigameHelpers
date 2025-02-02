@@ -85,7 +85,7 @@ object DatabaseHelper {
      * @param initCommonTables A boolean flag indicating whether to include common table SQL strings in the initialization process.
      *                         Defaults to `true`.
      */
-    fun initTables(sqlStrings: Array<String>, initCommonTables: Boolean = true){
+    fun initTables(sqlStrings: Array<String> = arrayOf(""), initCommonTables: Boolean = true){
         if (!::database.isInitialized)
             return
 
