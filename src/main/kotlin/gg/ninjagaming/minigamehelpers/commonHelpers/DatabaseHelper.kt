@@ -65,7 +65,8 @@ object DatabaseHelper {
      * It is recommended to call this method during the shutdown phase of the application or plugin to avoid resource leaks.
      */
     fun disconnectMysql(){
-        dataSource.close()
+        if (::dataSource.isInitialized)
+            dataSource.close()
     }
 
     /**
