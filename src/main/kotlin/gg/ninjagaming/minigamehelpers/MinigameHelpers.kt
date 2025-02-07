@@ -103,6 +103,7 @@ object MinigameHelpers {
         pluginInstance = plugin
         pluginConfig = config
 
+        DatabaseHelper.connectMysql(config)
         loadGamemodeConfig()
     }
 
