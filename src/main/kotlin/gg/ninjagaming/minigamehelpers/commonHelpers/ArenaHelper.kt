@@ -235,7 +235,7 @@ object ArenaHelper {
      * @param player The player to be teleported to the configured lobby location.
      */
     fun playerLobbyTeleport(player: Player){
-        val config: FileConfiguration = MinigameHelpers.getPluginInstance().config
+        val config: FileConfiguration = MinigameHelpers.getPluginConfig()
         val lobbyX = config.getDouble("lobby.SpawnX")
         val lobbyY = config.getDouble("lobby.SpawnY")
         val lobbyZ = config.getDouble("lobby.SpawnZ")
