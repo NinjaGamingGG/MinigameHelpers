@@ -39,13 +39,23 @@ private fun countdownTitle(duration: Int): Title {
  * selecting arenas, and updating player scoreboards.
  */
 object WaitingLobbyRunnable {
+    /**
+     * Creates and returns a Runnable instance that executes the `waitingLobbyTick` method.
+     *
+     * The Runnable can be used to manage the game's waiting lobby logic, including:
+     * - Starting or stopping countdown timers based on the number of players.
+     * - Sending messages, updating titles, and playing sounds for the players.
+     * - Building and assigning scoreboards to inform players of the current game state.
+     * - Advancing the game state when specific conditions are met.
+     *
+     * @return A Runnable instance that encapsulates the waiting lobby logic.
+     */
     fun scheduleRunnable(): Runnable {
         val runnable = Runnable {
             waitingLobbyTick()
         }
         return runnable
     }
-
 
     private fun waitingLobbyTick() {
         val playerList = ArenaHelper.PlayerManagement.getPlayerList()
