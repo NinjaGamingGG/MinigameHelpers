@@ -13,7 +13,7 @@ object ScoreboardHelper {
      * be assigned a non-null value before being accessed. Its lifecycle ensures
      * that changes to the scoreboard are retained appropriately.
      */
-    private lateinit var persistentScoreboard: Scoreboard
+    private var scoreboardMap = HashMap<String, Scoreboard>()
 
     /**
      * Retrieves the persistent scoreboard instance used in the application.
@@ -22,18 +22,17 @@ object ScoreboardHelper {
      *
      * @return the persistent Scoreboard instance
      */
-    fun getScoreboard(): Scoreboard {
-        if (!::persistentScoreboard.isInitialized)
-        {
+    fun getScoreboard(scoreBoardHandle: String): Scoreboard {
+        if (!scoreboardMap.containsKey(scoreBoardHandle)) {
             val scoreboardManager = Bukkit.getScoreboardManager()
 
             val scoreboard = scoreboardManager.newScoreboard
             scoreboard.resetScores("gameInfo")
 
-            persistentScoreboard = scoreboard
+            scoreboardMap[scoreBoardHandle] = scoreboard
         }
 
 
-        return persistentScoreboard
+        return scoreboardMap[scoreBoardHandle]!!
     }
 }

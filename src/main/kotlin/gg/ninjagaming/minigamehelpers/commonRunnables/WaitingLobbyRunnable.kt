@@ -180,7 +180,7 @@ object WaitingLobbyRunnable {
 
     fun buildScoreboard(): Scoreboard {
 
-        val scoreboard = ScoreboardHelper.getScoreboard()
+        val scoreboard = ScoreboardHelper.getScoreboard("lobby")
         var objective = scoreboard.getObjective("gameInfo")
 
         if (objective == null)
