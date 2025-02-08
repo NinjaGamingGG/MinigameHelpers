@@ -8,16 +8,32 @@ import org.bukkit.scoreboard.Scoreboard
  */
 object ScoreboardHelper {
     /**
-     * Creates and returns a new scoreboard instance while resetting the scores for "gameInfo".
+     * A scoreboard instance that persists across sessions or game states.
+     * This variable is initialized at a later point in time and is expected to
+     * be assigned a non-null value before being accessed. Its lifecycle ensures
+     * that changes to the scoreboard are retained appropriately.
+     */
+    private lateinit var persistentScoreboard: Scoreboard
+
+    /**
+     * Retrieves the persistent scoreboard instance used in the application.
+     * If the scoreboard is not yet initialized, it creates a new scoreboard
+     * using the Bukkit ScoreboardManager and assigns it to the persistent variable.
      *
-     * @return A new instance of the Scoreboard.
+     * @return the persistent Scoreboard instance
      */
     fun getScoreboard(): Scoreboard {
-        val scoreboardManager = Bukkit.getScoreboardManager()
+        if (!::persistentScoreboard.isInitialized)
+        {
+            val scoreboardManager = Bukkit.getScoreboardManager()
 
-        val scoreboard = scoreboardManager.newScoreboard
-        scoreboard.resetScores("gameInfo")
+            val scoreboard = scoreboardManager.newScoreboard
+            scoreboard.resetScores("gameInfo")
 
-        return scoreboard
+            persistentScoreboard = scoreboard
+        }
+
+
+        return persistentScoreboard
     }
 }
