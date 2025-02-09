@@ -4,6 +4,7 @@ import gg.ninjagaming.minigamehelpers.MinigameHelpers
 import gg.ninjagaming.minigamehelpers.commonTables.ArenaConfigurationEntry
 import gg.ninjagaming.minigamehelpers.commonTables.PlayerSpawnPointTable
 import org.bukkit.Bukkit
+import org.bukkit.GameRule
 import org.bukkit.Location
 import org.bukkit.World
 import org.bukkit.WorldCreator
@@ -23,7 +24,6 @@ import kotlin.isInitialized
 import kotlin.text.split
 import kotlin.text.toDouble
 import kotlin.text.trim
-import java.util.logging.Logger
 
 /**
  * Object responsible for managing arena-related functions and utilities
@@ -224,6 +224,11 @@ object ArenaHelper {
 
         MinigameHelpers.getPluginInstance().logger.info("Loading world ${selectedArena.arenaWorld}...")
 
+        if (MinigameHelpers.getPluginConfig().getBoolean("gamemode.Lock_Weather"))
+            newWorld.setGameRule(GameRule.DO_WEATHER_CYCLE, false)
+
+        if (MinigameHelpers.getPluginConfig().getBoolean("gamemode.Lock_Daytime"))
+        newWorld.setGameRule(GameRule.DO_DAYLIGHT_CYCLE, false)
         return newWorld
     }
 
