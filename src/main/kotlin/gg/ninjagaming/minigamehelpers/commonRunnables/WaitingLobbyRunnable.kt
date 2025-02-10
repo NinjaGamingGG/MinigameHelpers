@@ -124,8 +124,10 @@ object WaitingLobbyRunnable {
                 //Show Countdown title to player and play sound
                 ArenaHelper.PlayerManagement.getPlayerList().forEach {
                     it.showTitle(countdownTitle(timerDuration))
-                    it.playSound(it.location, Sound.ENTITY_PLAYER_LEVELUP, 0.5f, 1f)
                     it.exp = timerDuration.toFloat() / (DEFAULT_DURATION + COUNTDOWN_FINAL_PHASE_SECONDS)
+
+                    if (timerDuration <= COUNTDOWN_FINAL_PHASE_SECONDS)
+                        it.playSound(it.location, Sound.ENTITY_PLAYER_LEVELUP, 0.5f, 1f)
                 }
 
                 timerDuration--
