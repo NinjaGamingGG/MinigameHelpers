@@ -50,8 +50,10 @@ object PlayerJoinEvent: Listener {
 
             else -> {
                 val spectatorEnabled = MinigameHelpers.getPluginConfig().getBoolean("gamemode.spectatorEnabled")
-                if (!spectatorEnabled)
+                if (!spectatorEnabled){
+                    event.player.kick(Component.text("There are no Spectators allowed in this gamemode."))
                     return
+                }
 
                 playerJoinSpectator(event.player)
             }
@@ -78,5 +80,9 @@ object PlayerJoinEvent: Listener {
 
     private fun playerJoinSpectator(player: Player){
         ArenaHelper.PlayerManagement.addSpectator(player)
+        player.gameMode = GameMode.SPECTATOR
+
+        if (GameStateHelper.getGameState() == GameState.PLAYING || GameStateHelper.getGameState() == GameState.ENDING)
+            player.teleport(ArenaHelper.getRespawnPoints().random())
     }
 }
