@@ -33,7 +33,7 @@ import org.bukkit.event.player.PlayerJoinEvent
  *   - Checking if spectator mode is enabled in the plugin's configuration.
  *   - Adding the player to the spectator list if spectator mode is enabled.
  */
-object PlayerJoinEvent: Listener {
+object PlayerJoinEventListener: Listener {
     @EventHandler
     fun onPlayerJoinEvent(event: PlayerJoinEvent){
         val currentGameState = GameStateHelper.getGameState()
