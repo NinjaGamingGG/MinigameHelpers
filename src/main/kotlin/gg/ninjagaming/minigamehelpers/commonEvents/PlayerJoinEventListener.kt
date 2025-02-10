@@ -73,8 +73,7 @@ object PlayerJoinEventListener: Listener {
             player.inventory.setItem(4, LobbyItemsBuilder.createArenaVoteItem())
     }
 
-    private fun setPlayerGamemode(player: Player)
-    {
+    private fun setPlayerGamemode(player: Player) {
         player.gameMode = GameMode.ADVENTURE
     }
 
