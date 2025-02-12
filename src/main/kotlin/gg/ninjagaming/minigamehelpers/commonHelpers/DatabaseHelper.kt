@@ -95,7 +95,7 @@ object DatabaseHelper {
         if (initCommonTables)
             tableStrings = tableStrings.plus(getCommonTableSqlStrings())
 
-        sqlStrings.forEach { sqlString ->
+        tableStrings.forEach { sqlString ->
             database.useConnection { connection ->
                 connection.createStatement().use { statement ->
                     statement.execute(sqlString)
