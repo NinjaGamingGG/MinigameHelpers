@@ -104,6 +104,7 @@ object MinigameHelpers {
         pluginConfig = config
 
         DatabaseHelper.connectMysql(config)
+        DatabaseHelper.initTables(arrayOf())
         loadGamemodeConfig()
     }
 
