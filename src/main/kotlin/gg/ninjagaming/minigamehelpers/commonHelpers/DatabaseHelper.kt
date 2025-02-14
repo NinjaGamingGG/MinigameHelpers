@@ -2,6 +2,7 @@ package gg.ninjagaming.minigamehelpers.commonHelpers
 
 import com.zaxxer.hikari.HikariConfig
 import com.zaxxer.hikari.HikariDataSource
+import gg.ninjagaming.minigamehelpers.commonTables.sqlTableString
 import org.bukkit.configuration.file.FileConfiguration
 import org.ktorm.database.Database
 import kotlin.apply
@@ -132,7 +133,9 @@ object DatabaseHelper {
                     "Z DOUBLE," +
                     "YAW FLOAT," +
                     "PITCH FLOAT," +
-                    "isEnabled TINYINT(1))"
+                    "isEnabled TINYINT(1))",
+
+            sqlTableString
             )
     }
 }
