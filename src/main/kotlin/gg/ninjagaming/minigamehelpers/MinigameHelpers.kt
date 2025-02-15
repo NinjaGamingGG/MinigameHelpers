@@ -2,7 +2,9 @@ package gg.ninjagaming.minigamehelpers
 
 import gg.ninjagaming.minigamehelpers.commonHelpers.ArenaHelper
 import gg.ninjagaming.minigamehelpers.commonHelpers.DatabaseHelper
+import gg.ninjagaming.minigamehelpers.commonTables.ArenaConfigurationEntry
 import gg.ninjagaming.minigamehelpers.commonTables.ArenaConfigurationTable
+import gg.ninjagaming.minigamehelpers.commonTables.ConfigArenaLinkTable
 import gg.ninjagaming.minigamehelpers.commonTables.GameModeConfigurationEntry
 import gg.ninjagaming.minigamehelpers.commonTables.GameModeConfigurationTable
 import org.bukkit.configuration.file.FileConfiguration
@@ -11,8 +13,9 @@ import org.ktorm.dsl.eq
 import org.ktorm.dsl.insert
 import org.ktorm.entity.filter
 import org.ktorm.entity.firstOrNull
+import org.ktorm.entity.forEach
+import org.ktorm.entity.map
 import org.ktorm.entity.sequenceOf
-import org.ktorm.entity.toList
 
 /**
  * The `MinigameHelpers` object provides utility methods and configuration management for minigame-related functionality.
@@ -166,13 +169,34 @@ object MinigameHelpers {
         }
 
         if (minigameConfig.isEnabled == 0){
-            pluginInstance.logger.warning("The gamemode ${minigameConfig.entryName} is disabled.")
+            pluginInstance.logger.warning("The gamemode configuration ${minigameConfig.entryName} is disabled.")
             return
         }
 
         val arenas = database.sequenceOf(ArenaConfigurationTable)
             .filter {ArenaConfigurationTable.arenaEnabled eq 1}
 
-        ArenaHelper.ArenaConfigManager.setArenaList(arenas.toList())
+        val linkedArenaIds = database.sequenceOf(ConfigArenaLinkTable).filter { ConfigArenaLinkTable.configId eq minigameConfig.entryId }.map { it.arenaId }
+
+        if (linkedArenaIds.isEmpty()) {
+            pluginInstance.logger.warning("The gamemode configuration ${minigameConfig.entryName} has no arenas linked.")
+            return
+        }
+
+        var validArenas: List<ArenaConfigurationEntry>? = null
+
+        arenas.forEach {
+            if (!linkedArenaIds.contains(it.entryId))
+                return@forEach
+
+            validArenas = validArenas?.plus(it) ?: listOf(it)
+        }
+
+        if (validArenas == null) {
+            pluginInstance.logger.warning("The gamemode configuration ${minigameConfig.entryName} has no valid arenas linked.")
+            return
+        }
+
+        ArenaHelper.ArenaConfigManager.setArenaList(validArenas)
     }
 }
