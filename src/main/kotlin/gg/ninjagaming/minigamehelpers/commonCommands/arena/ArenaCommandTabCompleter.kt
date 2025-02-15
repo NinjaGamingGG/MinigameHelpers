@@ -66,16 +66,16 @@ object ArenaCommandTabCompleter: TabCompleter {
             else -> return FIRST_LEVEL_SUB_COMMANDS.filter { it.startsWith(args[0]) }.takeIf { it.isNotEmpty() }
         }
     }
-
     private fun secondLevelArgs(args: Array<out String>): List<String>?{
-        val arenaNames = ArenaHelper.ArenaConfigManager.getArenaList().map { it.arenaName }
-
         return when (args[0]) {
             "spawnpoint" -> SECOND_LEVEL_SPAWNPOINT_SUB_COMMANDS.filter { it.startsWith(args[1]) }.takeIf { it.isNotEmpty() }
             "world" -> SECOND_LEVEL_WORLD_SUB_COMMANDS.filter { it.startsWith(args[1]) }.takeIf { it.isNotEmpty() }
             "link" -> SECOND_LEVEL_LINK_SUB_COMMANDS.filter { it.startsWith(args[1]) }.takeIf { it.isNotEmpty() }
             "create" -> null
-            else -> arenaNames.filter { it.startsWith(args[1]) }.takeIf { it.isNotEmpty() }
+            else -> {
+                val arenaNames = ArenaHelper.ArenaConfigManager.getArenaList().map { it.arenaName }
+                arenaNames.filter { it.startsWith(args[1]) }.takeIf { it.isNotEmpty() }
+            }
         }
     }
 }
