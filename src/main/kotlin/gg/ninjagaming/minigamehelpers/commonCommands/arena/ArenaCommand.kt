@@ -1,6 +1,7 @@
 package gg.ninjagaming.minigamehelpers.commonCommands.arena
 
 import gg.ninjagaming.minigamehelpers.commonCommands.arena.ArenaCreateSubcommand.createArena
+import gg.ninjagaming.minigamehelpers.commonCommands.arena.link.ArenaLinkSubCommand
 import gg.ninjagaming.minigamehelpers.commonCommands.arena.spawnpoint.ArenaSpawnPointSubcommand
 import gg.ninjagaming.minigamehelpers.commonCommands.arena.world.ArenaWorldSubCommand
 import gg.ninjagaming.minigamehelpers.commonHelpers.DatabaseHelper
@@ -80,7 +81,15 @@ object ArenaCommand: CommandExecutor {
 
                 ArenaToggleEnabledSubcommand.toggleEnabled(args[1], sender)
             }
-            "world" -> ArenaWorldSubCommand.worldSubCommand(sender, args)
+            "world" ->{
+                if (args.size < 2)
+                {
+                    sender.sendMessage("Usage: /arena world <enter, center, set>")
+                    return true
+                }
+
+                ArenaWorldSubCommand.worldSubCommand(sender, args)
+            }
 
             "set-icon" -> {
                 if (args.size < 3)
@@ -93,8 +102,31 @@ object ArenaCommand: CommandExecutor {
             }
 
 
-            "spawnpoint" -> ArenaSpawnPointSubcommand.spawnPointSubCommand(sender, args)
-            else -> sender.sendMessage("Invalid usage. /arena <create, view, delete, toggle, world, spawnpoint>")
+            "spawnpoint" -> {
+                if (args.size < 2)
+                {
+                    sender.sendMessage("Usage: /arena spawnpoint <add, remove, list>")
+                    return true
+                }
+
+                ArenaSpawnPointSubcommand.spawnPointSubCommand(sender, args)
+            }
+
+            "link" -> {
+                if (args.size < 2)
+                {
+                    sender.sendMessage("Usage: /arena link <create, delete, list>")
+                    return true
+                }
+
+                ArenaLinkSubCommand.linkSubCommand(sender, args)
+            }
+
+            "list" -> {
+                ArenaListSubcommand.listArenas(sender)
+            }
+
+            else -> sender.sendMessage("Invalid usage. /arena <create, view, delete, list, link, toggle, world, spawnpoint>")
         }
         return true
     }
