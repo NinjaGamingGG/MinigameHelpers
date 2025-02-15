@@ -157,6 +157,10 @@ object ArenaHelper {
          * @return A list of `ArenaConfigurationEntry` containing the configurations of all arenas.
          */
         fun getArenaList(): List<ArenaConfigurationEntry>{
+            if (!::arenaList.isInitialized) {
+                MinigameHelpers.getPluginInstance().logger.severe("The arena list has not been initialized.")
+                return emptyList()
+            }
             return arenaList
         }
 
