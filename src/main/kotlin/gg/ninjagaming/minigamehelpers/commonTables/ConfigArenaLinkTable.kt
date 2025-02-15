@@ -20,5 +20,5 @@ interface ConfigArenaLinkEntry: Entity<ConfigArenaLinkEntry> {
 
 val sqlTableString = "CREATE TABLE IF NOT EXISTS ConfigArenaLinkIndex (" +
         "entryId INT NOT NULL AUTO_INCREMENT PRIMARY KEY," +
-        "entryId INT," +
+        "configId INT," +
         "arenaId INT)"
