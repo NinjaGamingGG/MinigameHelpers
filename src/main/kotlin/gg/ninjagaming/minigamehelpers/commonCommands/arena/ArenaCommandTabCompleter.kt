@@ -50,17 +50,19 @@ object ArenaCommandTabCompleter: TabCompleter {
     }
 
     private val FIRST_LEVEL_SUB_COMMANDS = listOf(
-        "create", "view", "delete", "toggle", "world", "set-icon" , "spawnpoint"
+        "create", "view", "delete", "toggle", "world", "set-icon" , "spawnpoint", "link" , "list"
     )
 
     private val SECOND_LEVEL_SPAWNPOINT_SUB_COMMANDS = listOf("add", "remove", "list")
     private val SECOND_LEVEL_WORLD_SUB_COMMANDS = listOf("set", "center", "enter")
+    private val SECOND_LEVEL_LINK_SUB_COMMANDS = listOf("create", "list", "remove")
 
     private fun firstLevelArgs(args: Array<out String>): List<String>?{
 
 
         return when (args[0]) {
             "create" -> null
+            "list" -> null
             else -> return FIRST_LEVEL_SUB_COMMANDS.filter { it.startsWith(args[0]) }.takeIf { it.isNotEmpty() }
         }
     }
@@ -71,6 +73,7 @@ object ArenaCommandTabCompleter: TabCompleter {
         return when (args[0]) {
             "spawnpoint" -> SECOND_LEVEL_SPAWNPOINT_SUB_COMMANDS.filter { it.startsWith(args[1]) }.takeIf { it.isNotEmpty() }
             "world" -> SECOND_LEVEL_WORLD_SUB_COMMANDS.filter { it.startsWith(args[1]) }.takeIf { it.isNotEmpty() }
+            "link" -> SECOND_LEVEL_LINK_SUB_COMMANDS.filter { it.startsWith(args[1]) }.takeIf { it.isNotEmpty() }
             "create" -> null
             else -> arenaNames.filter { it.startsWith(args[1]) }.takeIf { it.isNotEmpty() }
         }
