@@ -41,7 +41,7 @@ object DatabaseHelper {
             password = passwordString
             idleTimeout = 10000
             maximumPoolSize = 10
-
+            minimumIdle = 10
         }
 
         dataSource = HikariDataSource(hikariConfig)
