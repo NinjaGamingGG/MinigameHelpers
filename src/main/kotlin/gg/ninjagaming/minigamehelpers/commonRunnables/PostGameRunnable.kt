@@ -11,16 +11,20 @@ import kotlin.collections.forEach
 
 object PostGameRunnable {
     fun scheduleRunnable(winningPlayer: Player?, waitingTime: Int): Runnable {
+        countdown = waitingTime
+
         val runnable = Runnable {
-            mainGameTick(winningPlayer, waitingTime)
+            mainGameTick(winningPlayer)
         }
+
+
 
         return runnable
 
     }
 
-    fun mainGameTick(winningPlayer: Player?, waitingTime: Int){
-        var countdown = waitingTime
+    var countdown = 0
+    fun mainGameTick(winningPlayer: Player?){
         if (countdown == 0)
             Bukkit.shutdown()
 
