@@ -1,5 +1,8 @@
 package gg.ninjagaming.minigamehelpers.commonEvents
 
+import gg.ninjagaming.minigamehelpers.commonHelpers.GameState
+import gg.ninjagaming.minigamehelpers.commonHelpers.GameStateHelper
+import org.bukkit.GameMode
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.inventory.InventoryClickEvent
@@ -18,6 +21,9 @@ import org.bukkit.event.inventory.InventoryClickEvent
 object InventoryClickEventListener: Listener {
     @EventHandler
     fun onInventoryClick(eventHandler: InventoryClickEvent){
+        if (GameStateHelper.getGameState() == GameState.LOBBY && eventHandler.whoClicked.gameMode == GameMode.CREATIVE)
+            return
+
         eventHandler.isCancelled = true
     }
 }
